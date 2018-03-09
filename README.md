@@ -1,7 +1,6 @@
 # CF_tools
 Running caffe with SSD, FSSD, YOLO implemented
-
-`cd CF_tools`
+Install caffe and its python module [here](https://github.com/miamor/caffe)
 
 ## Simple run
 `./tool.sh`
