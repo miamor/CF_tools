@@ -3,7 +3,7 @@
 # This example requires bash.
 
 GTKDIALOG=gtkdialog
-ROOT_DIR="/media/tunguyen/Devs/DeepLearning/CF_tools"
+ROOT_DIR="$HOME/CF_tools"
 
 export TMPDIR=/tmp/gtkdialog/examples/"`basename $0`"
 mkdir -p "$TMPDIR"
