@@ -1,0 +1,13 @@
+data/*
+lmdb/*
+models/*
+snapshot_models/*
+examples/*
+CF_viz/*
+*.jpg
+*.png
+
+!data/.gitkeep
+!lmdb/.gitkeep
+!models/.gitkeep
+!snapshot_models/.gitkeep

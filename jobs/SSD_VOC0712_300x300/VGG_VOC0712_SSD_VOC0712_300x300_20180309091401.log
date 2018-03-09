@@ -1,0 +1,13 @@
+I0309 09:14:01.927532  8549 caffe.cpp:217] Using GPUs 0
+F0309 09:14:01.927817  8549 common.cpp:66] Cannot use GPU in CPU-only Caffe: check mode.
+*** Check failure stack trace: ***
+    @     0x7f7c0e2c20cd  google::LogMessage::Fail()
+    @     0x7f7c0e2c3f33  google::LogMessage::SendToLog()
+    @     0x7f7c0e2c1c28  google::LogMessage::Flush()
+    @     0x7f7c0e2c4999  google::LogMessageFatal::~LogMessageFatal()
+    @     0x7f7c0e8f9040  caffe::Caffe::SetDevice()
+    @     0x55db46129988  (unknown)
+    @     0x55db46125bd0  (unknown)
+    @     0x7f7c0d0d91c1  __libc_start_main
+    @     0x55db4612652a  (unknown)
+    @              (nil)  (unknown)
