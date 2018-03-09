@@ -1,1 +1,0 @@
-jobs/VGGNet/VOC0712/SSD_300x300_orig/VGG_VOC0712_SSD_300x300_orig.sh: 2: jobs/VGGNet/VOC0712/SSD_300x300_orig/VGG_VOC0712_SSD_300x300_orig.sh: ./build/tools/caffe: not found
