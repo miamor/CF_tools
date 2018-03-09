@@ -2,6 +2,8 @@ data/*
 lmdb/*
 models/*
 snapshot_models/*
+jobs/*
+
 examples/*
 CF_viz/*
 *.jpg
@@ -11,3 +13,4 @@ CF_viz/*
 !lmdb/.gitkeep
 !models/.gitkeep
 !snapshot_models/.gitkeep
+!jobs/.gitkeep
