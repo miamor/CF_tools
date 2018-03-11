@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CAFFE_ROOT="$HOME/CAFFE_SSD"
+CAFFE_ROOT="$HOME/CAFFE"
 ROOT_DIR="$HOME/CF_tools"
 #ROOT_DIR="./"
 #dataset_dir="VOCdevkit" # or Pedestrian
