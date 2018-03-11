@@ -54,15 +54,15 @@ funcSubmitForm() {
 		gen_dir=$gen_dir__train
 		model=$model__train
 		weight_file=$weight_file__train
-		LABEL_FILE=$gen_dir__train/ssd/label_map.txt
+		#LABEL_FILE=$gen_dir__train/$model__train/label_map.txt
 
 		#img_size=${img_size__train##*x}
 		img_size=$img_size__train
 
 		#echo '<action>python $ROOT_DIR/CF_$model__train/${model__train}_pascal.py --gen_dir=$gen_dir --image_resize=$img_size__train --model_weights=$weight_file__train --labelmap_file=$LABEL_FILE 2>'"$train__log"'</action>'
 		#echo '<action>python $ROOT_DIR/CF_$model__train/${model__train}_pascal.py --gen_dir=$gen_dir__train --image_resize=$img_size__train --model_weights=$weight_file__train --labelmap_file=$LABEL_FILE 2>&1</action>'
-		echo '<action>echo ./run_tool.sh  -t $type  -g $gen_dir__train  -m $model__train  -s $img_size__train  -w $weight_file__train  2>&1</action>'
-		echo '<action>./run_tool.sh  -t train  -g $gen_dir__train  -m $model__train  -s $img_size__train  -w $weight_file__train  2>&1</action>'
+		echo '<action>echo ./run_tool.sh  -t $type  -u 0  -n $num_classes_train  -g $gen_dir__train  -m $model__train  -s $img_size__train  -w $weight_file__train  -i 0  2>&1</action>'
+		echo '<action>./run_tool.sh  -t $type  -u 0  -n $num_classes_train  -g $gen_dir__train  -m $model__train  -s $img_size__train  -w $weight_file__train  -i 0  2>&1</action>'
 	
 	elif [ $1 == "detect" ]
 	then
@@ -70,26 +70,26 @@ funcSubmitForm() {
 		gen_dir=$gen_dir__test
 		model=$model__test
 		weight_file=$weight_file__test
-		LABEL_FILE=$gen_dir__test/ssd/label_map.txt
+		#LABEL_FILE=$gen_dir__test/$model__test/label_map.txt
 
 		img_size=$img_size__test
 
 		#echo '<action>python $ROOT_DIR/CF_$model__test/${model__test}_pascal.py --gen_dir=$gen_dir__test --image_resize=$img_size__test --model_weights=$weight_file__test --labelmap_file=$LABEL_FILE 2>&1</action>'
 		
-		echo '<action>echo ./run_tool.sh  -t detect  -g $gen_dir__test  -m $model__test  -s $img_size__test  -w $weight_file__test  -i $img_file  2>&1</action>'
-		echo '<action>./run_tool.sh  -t detect  -u $gpu_id  -g $gen_dir__test  -m $model__test  -s $img_size__test  -w $weight_file__test  -i $img_file  2>&1</action>'
+		echo '<action>echo ./run_tool.sh  -t detect  -u $gpu_id  -n $num_classes_test  -g $gen_dir__test  -m $model__test  -s $img_size__test  -w $weight_file__test  -i $img_file  2>&1</action>'
+		echo '<action>./run_tool.sh  -t detect  -u $gpu_id  -n $num_classes_test  -g $gen_dir__test  -m $model__test  -s $img_size__test  -w $weight_file__test  -i $img_file  2>&1</action>'
 
 	elif [ $1 == "prepare_data" ]
 	then
 		gen_dir=$gen_dir__prepare
 		model=$model__prepare
 		weight_file=$weight_file__prepare
-		LABEL_FILE=$gen_dir__prepare/ssd/label_map.txt
+		#LABEL_FILE=$gen_dir__prepare/$model__prepare/label_map.txt
 
 		img_size=$img_size__prepare
 		
-		echo '<action>echo ./prepare_data.sh  -g $gen_dir__prepare  -m $model__prepare  -w $weight_file__prepare  2>&1</action>'
-		echo '<action>./prepare_data.sh  -g $gen_dir__prepare  -m $model__prepare  -w $weight_file__prepare  2>&1</action>'
+		echo '<action>echo ./prepare_data.sh  -g $gen_dir__prepare  -d $dataset_dir__prepare  -m $model__prepare  2>&1</action>'
+		echo '<action>./prepare_data.sh  -g $gen_dir__prepare  -d $dataset_dir__prepare  -m $model__prepare  2>&1</action>'
 	fi
 
 	# Execute commands
@@ -134,8 +134,8 @@ export MAIN_DIALOG='
 						</text>
 						<comboboxentry  active="0">
 							<variable>type</variable>
-							<item>Train</item>
-							<item>Evaluate</item>
+							<item>train</item>
+							<item>evaluate</item>
 						</comboboxentry>
 					</hbox>
 
@@ -151,6 +151,15 @@ export MAIN_DIALOG='
 						</comboboxentry>
 					</hbox>
 
+					<hbox>
+						<text>
+							<label>Num classes:</label>
+						</text>
+						<entry activates-default="true">
+							<default>21</default>
+							'"`funcentCreate num_classes_train 0 0`"'
+					</hbox>
+					
 					<hbox>
 						<text>
 							<label>Input size:</label>
@@ -216,6 +225,15 @@ export MAIN_DIALOG='
 						</comboboxentry>
 					</hbox>
 
+					<hbox>
+						<text>
+							<label>Num classes:</label>
+						</text>
+						<entry activates-default="true">
+							<default>21</default>
+							'"`funcentCreate num_classes_test 0 0`"'
+					</hbox>
+					
 					<hbox>
 						<text>
 							<label>Input size:</label>
@@ -324,22 +342,6 @@ export MAIN_DIALOG='
 						'"`funcentCreate gen_dir__prepare 0 0`"'
 
 						'"`funcbtnCreate gen_dir__prepare Select """Inserting into""" fileselect`"'
-					</hbox>
-
-					<hbox>
-						<text>
-							<label>Pretrained weight (.caffemodel)</label>
-						</text>
-						<entry fs-action="file"
-							fs-title="Select a file" 
-							fs-filters="*.caffemodel"
-							editable="false"
-							block-function-signals="true">
-						<output file>'"$TMPDIR"'/outputfile</output>
-						
-						'"`funcentCreate weight_file__prepare 0 0`"'
-						
-						'"`funcbtnCreate weight_file__prepare Select """Inserting into""" fileselect`"'
 					</hbox>
 
 					<hbox homogeneous="true">

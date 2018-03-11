@@ -29,7 +29,7 @@ default_dataset_gen_dir = "{}/data/VOC0712".format(CF_tool_root)
 default_model_weights = '{}/snapshot_models/SSD_300x300/VGG_VOC0712_SSD_300x300_iter_120000.caffemodel'.format(CF_tool_root)
 default_label_map = '{}/data/VOC0712/ssd/label_map.txt'.format(CF_tool_root)
 default_img_size = 300
-
+default_num_classes = 21
 
 # Add extra layers on top of a "base" network (e.g. VGGNet or Inception).
 def AddExtraLayers(net, use_batchnorm=True, lr_mult=1):
@@ -292,7 +292,7 @@ def main(args):
 
 
     # MultiBoxLoss parameters.
-    num_classes = 21
+    num_classes = int(args.num_classes)
     share_location = True
     background_label_id = 0
     train_on_diff_gt = True
@@ -621,6 +621,7 @@ def parse_args():
     parser.add_argument('--image_resize', default=default_img_size, type=int)
     parser.add_argument('--model_weights', default=default_model_weights)
     parser.add_argument('--labelmap_file', default=default_label_map)
+    parser.add_argument('--num_classes', default=default_num_classes)
 
     return parser.parse_args()
 

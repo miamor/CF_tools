@@ -44,7 +44,7 @@ shift $((OPTIND-1))
 
 
 gen_dir_name=${gen_dir##*/}
-echo $model
+
 
 if [ "$model" == "ssd" ] || [ "$model" == "fssd" ]
 then
@@ -59,16 +59,28 @@ fi
 
 if [ "$type" == "detect" ]
 then
-    python $ROOT_DIR/CF_$model/${model}_detect.py  --num_classes=$num_classes --gpu_id=$gpu_id --labelmap_file=$LABEL_FILE --image_resize=$img_size --model_weights=$weight_file --image_file=$img_file 2>&1
+    if [ "$model" == "ssd" ] || [ "$model" == "fssd" ]
+    then
+        python $ROOT_DIR/CF_$model/${model}_detect.py --gpu_id=$gpu_id --labelmap_file=$LABEL_FILE --image_resize=$img_size --model_weights=$weight_file --image_file=$img_file 2>&1
+    fi
+
 fi
 
 if [ "$type" == "train" ]
 then
-    python $ROOT_DIR/CF_$model/${model}_pascal.py --num_classes=$num_classes --gen_dir=$gen_dir_name --image_resize=$img_size --model_weights=$weight_file --labelmap_file=$LABEL_FILE 2>&1
+    if [ "$model" == "ssd" ] || [ "$model" == "fssd" ]
+    then
+        python $ROOT_DIR/CF_$model/${model}_pascal.py --gen_dir=$gen_dir_name --image_resize=$img_size --model_weights=$weight_file --labelmap_file=$LABEL_FILE 2>&1
+    fi
+
 fi
 
 if [ "$type" == "evaluate" ]
 then
-    python $ROOT_DIR/CF_$model/score_${model}_pascal.py --num_classes=$num_classes --gen_dir=$gen_dir_name --image_resize=$img_size --model_weights=$weight_file --labelmap_file=$LABEL_FILE 2>&1
+    if [ "$model" == "ssd" ] || [ "$model" == "fssd" ]
+    then
+        python $ROOT_DIR/CF_$model/score_${model}_pascal.py --gen_dir=$gen_dir_name --image_resize=$img_size --model_weights=$weight_file --labelmap_file=$LABEL_FILE 2>&1
+    fi
+
 fi
 
