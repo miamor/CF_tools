@@ -227,6 +227,15 @@ export MAIN_DIALOG='
 
 					<hbox>
 						<text>
+							<label>GPU id:</label>
+						</text>
+						<entry activates-default="true">
+							<default>0</default>
+							'"`funcentCreate gpu_id 0 0`"'
+					</hbox>
+
+					<hbox>
+						<text>
 							<label>Num classes:</label>
 						</text>
 						<entry activates-default="true">

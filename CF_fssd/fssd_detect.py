@@ -23,6 +23,7 @@ default_model_weights = '{}/snapshot_models/SSD_300x300/VGG_VOC0712_SSD_300x300_
 default_label_map = '{}/data/VOC0712/ssd/label_map.txt'.format(CF_tool_root)
 default_img_size = 300
 default_image = '{}/images/fish-bike.jpg'.format(CF_tool_root)
+default_num_classes = 21
 
 detect_image_out = "ssd_detect_result.jpg"
 
@@ -159,6 +160,7 @@ def parse_args():
     parser.add_argument('--image_resize', default=default_img_size, type=int)
     parser.add_argument('--model_weights', default=default_model_weights)
     parser.add_argument('--labelmap_file', default=default_label_map)
+    parser.add_argument('--num_classes', default=default_num_classes)
 
 
     parser.add_argument('--image_file', default=default_image)
